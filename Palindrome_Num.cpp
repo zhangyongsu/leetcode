@@ -17,6 +17,8 @@ public:
         {
             if (isPalindrome((int)((int)x % (int)pow(10,(int)log10(x)))/10))
                 return true;
+            else
+                return false;
         }
         else
         {
