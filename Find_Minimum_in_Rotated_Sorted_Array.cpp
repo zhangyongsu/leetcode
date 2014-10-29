@@ -2,7 +2,6 @@
 #include <vector>
 
 using namespace std;
-//using namespace vector;
 class Solution {
 public:
     int findMin(vector<int> &num) {
