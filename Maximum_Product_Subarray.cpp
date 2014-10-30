@@ -65,6 +65,8 @@ public:
         product = 1;
         tmp_n =1;
         tmp_l =1;
+        if (n == 1)
+            return A[1];
         for (int i = 0; i < n; i++)
         {
             findmaxP(A,i);
@@ -80,9 +82,10 @@ public:
 #if 1
 int main()
 {
-    int a[] = {2, 3, -2, 4, -3, 0,2, -2, 4, 8, 4 ,-9, -8,2, 0,2 ,3,4};
+    int a[] = {-1, 0,-1,2,-3,1,2,3,-2};
+    //int a[] = {2, 3, -2, 4, -3, 0,2, -2, 4, 8, 4 ,-9, -8,2, 0,2 ,3,4};
     Solution test;
-    cout << test.maxProduct(a, 18) << endl;
+    cout << test.maxProduct(a, 9) << endl;
     return 0;
 
 }
