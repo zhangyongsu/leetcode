@@ -6,20 +6,28 @@ class Solution
 {
     void findmaxP(int A[], int i)
     {
+#if 0
         cout << "A[i]=" << A[i]<<endl;
         cout << "tmp_o=" << tmp_o<<endl;
         cout << "tmp_n=" << tmp_n<<endl;
+        cout << "tmp_l=" << tmp_l<<endl;
+#endif
         if (A[i] > 0)
         {
             tmp_o *= A[i];
             tmp_n *= A[i];
+            tmp_l *= A[i];
         }
         else if (A[i] == 0)
         {
             if (product < (tmp_o > tmp_n ?tmp_o:tmp_n))
                 product = tmp_o > tmp_n ?tmp_o:tmp_n;
+            if (product < tmp_l )
+                product = tmp_l;
             tmp_o = 1;
             tmp_n = 1;
+            tmp_l = 1;
+            firstnegtive = 1;
         }
         else if (A[i] < 0)
         {
@@ -31,34 +39,41 @@ class Solution
             else
             {
                 tmp_n *= A[i];
-                if (product < tmp_o )
-                    product = tmp_o;
+                if (product < tmp_o > tmp_n ?tmp_o:tmp_n  )
+                    product = tmp_o > tmp_n ?tmp_o:tmp_n;
                 tmp_o = 1;
             }
+            if (firstnegtive == 1)
+            {
+                tmp_l = 1;
+                firstnegtive = 0;
+            }
+            else
+                tmp_l *= A[i];
         }
     }
 public:
     long long product ;
     long long tmp_o ;
     long long tmp_n ;
+    long long tmp_l ;
+    int firstnegtive;
     
     int maxProduct(int A[], int n)
-    {
+    {  
+        firstnegtive = 1;
         product = 1;
         tmp_o =1;
         tmp_n =1;
+        tmp_l =1;
         for (int i = 0; i < n; i++)
         {
             findmaxP(A,i);
         }
         if (product < (tmp_o > tmp_n ?tmp_o:tmp_n))
             product = tmp_o > tmp_n ?tmp_o:tmp_n;
-        for (int i = n-1; i>=0; i--)
-        {
-            findmaxP(A,i);
-        }
-        if (product < (tmp_o > tmp_n ?tmp_o:tmp_n))
-            product = tmp_o > tmp_n ?tmp_o:tmp_n;
+        if (product < tmp_l )
+            product = tmp_l;
         return product;
     }
 };
