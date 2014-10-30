@@ -1,5 +1,12 @@
 #include <iostream>
+/*
+ *the max product happend on this 3 kinds of situation:
 
+ * 0 (* * -* ****** -* **) 0
+ * 0 (* * -* ****** )-* ** 0
+ * 0 * * -*( ****** -* **) 0
+ *
+ * */
 using namespace std;
 
 class Solution
@@ -14,17 +21,13 @@ class Solution
 #endif
         if (A[i] > 0)
         {
-            tmp_o *= A[i];
             tmp_n *= A[i];
             tmp_l *= A[i];
         }
         else if (A[i] == 0)
         {
-            if (product < (tmp_o > tmp_n ?tmp_o:tmp_n))
-                product = tmp_o > tmp_n ?tmp_o:tmp_n;
-            if (product < tmp_l )
-                product = tmp_l;
-            tmp_o = 1;
+            if (product < (tmp_l > tmp_n ?tmp_l:tmp_n))
+                product = tmp_l > tmp_n ?tmp_l:tmp_n;
             tmp_n = 1;
             tmp_l = 1;
             firstnegtive = 1;
@@ -34,14 +37,12 @@ class Solution
             if (tmp_n < 0)
             {
                 tmp_n *= A[i];
-                tmp_o = tmp_n;
             }
             else
             {
+                if (product < tmp_l > tmp_n ?tmp_l:tmp_n  )
+                    product = tmp_l > tmp_n ?tmp_l:tmp_n;
                 tmp_n *= A[i];
-                if (product < tmp_o > tmp_n ?tmp_o:tmp_n  )
-                    product = tmp_o > tmp_n ?tmp_o:tmp_n;
-                tmp_o = 1;
             }
             if (firstnegtive == 1)
             {
@@ -54,7 +55,6 @@ class Solution
     }
 public:
     long long product ;
-    long long tmp_o ;
     long long tmp_n ;
     long long tmp_l ;
     int firstnegtive;
@@ -63,15 +63,14 @@ public:
     {  
         firstnegtive = 1;
         product = 1;
-        tmp_o =1;
         tmp_n =1;
         tmp_l =1;
         for (int i = 0; i < n; i++)
         {
             findmaxP(A,i);
         }
-        if (product < (tmp_o > tmp_n ?tmp_o:tmp_n))
-            product = tmp_o > tmp_n ?tmp_o:tmp_n;
+        if (product < (tmp_l > tmp_n ?tmp_l:tmp_n))
+            product = tmp_l > tmp_n ?tmp_l:tmp_n;
         if (product < tmp_l )
             product = tmp_l;
         return product;
@@ -81,9 +80,9 @@ public:
 #if 1
 int main()
 {
-    int a[] = {2, 3, -2, 4, -3, 0, -2, 4, 8, 4 ,-9, -8, 0,2 ,3,4};
+    int a[] = {2, 3, -2, 4, -3, 0,2, -2, 4, 8, 4 ,-9, -8,2, 0,2 ,3,4};
     Solution test;
-    cout << test.maxProduct(a, 16) << endl;
+    cout << test.maxProduct(a, 18) << endl;
     return 0;
 
 }
