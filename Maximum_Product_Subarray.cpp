@@ -19,17 +19,30 @@ class Solution
         cout << "tmp_n=" << tmp_n<<endl;
         cout << "tmp_l=" << tmp_l<<endl;
 #endif
+        
         if (A[i] > 0)
         {
             tmp_n *= A[i];
+            bool_n = true;
             tmp_l *= A[i];
+            bool_l = true;
         }
         else if (A[i] == 0)
         {
+            if (bool_n)
+                if (product < tmp_n)
+                    product = tmp_n;
+            if (bool_l)
+                if (product < tmp_l)
+                    product = tmp_l;
+                /*
             if (product < (tmp_l > tmp_n ?tmp_l:tmp_n))
                 product = tmp_l > tmp_n ?tmp_l:tmp_n;
+                */
             tmp_n = 1;
             tmp_l = 1;
+            bool_n = false;
+            bool_l = false;
             firstnegtive = 1;
         }
         else if (A[i] < 0)
@@ -37,12 +50,19 @@ class Solution
             if (tmp_n < 0)
             {
                 tmp_n *= A[i];
+                bool_n = true;
             }
             else
             {
+                if (bool_n)
+                    if (product < tmp_n)
+                        product = tmp_n;
+                /*
                 if (product < tmp_l > tmp_n ?tmp_l:tmp_n  )
                     product = tmp_l > tmp_n ?tmp_l:tmp_n;
+                    */
                 tmp_n *= A[i];
+            
             }
             if (firstnegtive == 1)
             {
@@ -50,31 +70,45 @@ class Solution
                 firstnegtive = 0;
             }
             else
+            {
                 tmp_l *= A[i];
+                bool_l = true;
+            }
         }
+        if (product < A[i])
+            product = A[i];
     }
 public:
     long long product ;
     long long tmp_n ;
+    bool bool_n;
     long long tmp_l ;
+    bool bool_l;
     int firstnegtive;
     
     int maxProduct(int A[], int n)
     {  
         firstnegtive = 1;
-        product = 1;
+        product = -2147483648;
         tmp_n =1;
+        bool_n = false;
         tmp_l =1;
-        if (n == 1)
-            return A[1];
+        bool_l = false;
         for (int i = 0; i < n; i++)
         {
             findmaxP(A,i);
         }
+        if (bool_n)
+            if (product < tmp_n)
+                product = tmp_n;
+        if (bool_l)
+            if (product < tmp_l)
+                product = tmp_l;
+        
+        /*
         if (product < (tmp_l > tmp_n ?tmp_l:tmp_n))
             product = tmp_l > tmp_n ?tmp_l:tmp_n;
-        if (product < tmp_l )
-            product = tmp_l;
+        */
         return product;
     }
 };
